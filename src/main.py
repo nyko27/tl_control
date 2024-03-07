@@ -9,17 +9,7 @@ from controller.device import device_router
 from controller.device_schedule import device_schedule_router
 from src.security.jwt import Settings
 
-
-description = """
-    climate.living_room_thermostat\n
-    climate.bedroom_thermostat\n
-    light.living_room_light\n
-    light.bedroom_light\n
-    sensor.living_room_temperature\n
-    sensor.bedroom_temperature\n
-    """
-
-app = FastAPI(description=description)
+app = FastAPI()
 
 app.include_router(device_schedule_router)
 app.include_router(device_router)
