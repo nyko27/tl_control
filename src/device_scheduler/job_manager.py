@@ -1,4 +1,5 @@
 from datetime import time
+
 from src.clients import device_manager, device_scheduler
 from src.utils import generate_uuid
 
@@ -8,10 +9,10 @@ def execute_device_command_wrapper(command: str, entity_id: str) -> dict:
 
 
 def schedule_device_command(
-    entity_id: str,
-    command: str,
-    job_time: time,
-    job_scheduler=device_scheduler,
+        entity_id: str,
+        command: str,
+        job_time: time,
+        job_scheduler=device_scheduler,
 ) -> str:
     job_id = generate_uuid()
     job_scheduler.add_job(
@@ -28,7 +29,7 @@ def schedule_device_command(
 
 
 def delete_scheduled_command(
-    job_id: str,
-    job_scheduler=device_scheduler,
+        job_id: str,
+        job_scheduler=device_scheduler,
 ) -> None:
     job_scheduler.remove_job(job_id)

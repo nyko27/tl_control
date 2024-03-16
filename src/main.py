@@ -4,9 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
-from controller.profile import profile_router
+
 from controller.device import device_router
 from controller.device_schedule import device_schedule_router
+from controller.profile import profile_router
 from src.security.jwt import Settings
 
 app = FastAPI()

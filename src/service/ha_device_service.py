@@ -1,8 +1,12 @@
 from datetime import datetime
-from sqlalchemy.orm import Session
-from sqlalchemy import or_
+
 from fastapi import Depends, HTTPException
+from sqlalchemy import or_
+from sqlalchemy.orm import Session
+
+from src.clients import device_manager
 from src.dependecies import get_db
+from src.homeassistant_utils.device_manager import DeviceManager
 from src.model.ha_device import HaDevice
 from src.model.profile import Profile
 from src.schemas.ha_device import (
@@ -11,8 +15,6 @@ from src.schemas.ha_device import (
     HaDeviceHistory,
     DeviceStateAndSchedule,
 )
-from src.clients import device_manager
-from src.homeassistant_utils.device_manager import DeviceManager
 from src.utils import calculate_timedelta, Domain, TimeLimits
 from .device_schedule_service import DeviceScheduleService
 

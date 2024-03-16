@@ -1,17 +1,17 @@
 from fastapi import APIRouter, Depends
 from fastapi_jwt_auth import AuthJWT
+
 from src.homeassistant_utils.parse_config import get_entity_ids_from_yaml
 from src.schemas.profile import ProfileLogin, ProfileForm, ProfileORM
 from src.service.profile_service import ProfileService
-
 
 profile_router = APIRouter(prefix="/profile", tags=["profile"])
 
 
 @profile_router.post("/register", response_model=ProfileORM)
 async def create_profile(
-    profile_data=Depends(ProfileForm.as_form),
-    profile_service: ProfileService = Depends(),
+        profile_data=Depends(ProfileForm.as_form),
+        profile_service: ProfileService = Depends(),
 ):
     decoded_yaml = await profile_data.config_yaml.read()
     ha_entities = get_entity_ids_from_yaml(decoded_yaml)
@@ -26,9 +26,9 @@ async def create_profile(
 
 @profile_router.post("/login")
 async def login(
-    login_data: ProfileLogin,
-    profile_service: ProfileService = Depends(),
-    authorize: AuthJWT = Depends(),
+        login_data: ProfileLogin,
+        profile_service: ProfileService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     profile_service.check_login_data(login_data.username, login_data.password)
     access_token = authorize.create_access_token(subject=login_data.username)
@@ -45,8 +45,8 @@ async def logout(authorize: AuthJWT = Depends()):
 
 @profile_router.get("", response_model=ProfileORM)
 async def get_profile(
-    profile_service: ProfileService = Depends(),
-    authorize: AuthJWT = Depends(),
+        profile_service: ProfileService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     username = authorize.get_jwt_subject()
@@ -56,8 +56,8 @@ async def get_profile(
 
 @profile_router.delete("/delete")
 async def delete(
-    profile_service: ProfileService = Depends(),
-    authorize: AuthJWT = Depends(),
+        profile_service: ProfileService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     username = authorize.get_jwt_subject()

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi_jwt_auth import AuthJWT
+
 from src.schemas.ha_device import (
     HaDeviceCommand,
     HaDeviceState,
@@ -9,15 +10,14 @@ from src.schemas.ha_device import (
 from src.service.ha_device_service import HaDeviceService
 from src.utils import Domain, TimeLimits
 
-
 device_router = APIRouter(prefix="/devices", tags=["devices"])
 
 
 @device_router.get("/all/{domain}", response_model=list[HaDeviceState])
 async def get_domain_devices(
-    domain: Domain,
-    ha_device_service: HaDeviceService = Depends(),
-    authorize: AuthJWT = Depends(),
+        domain: Domain,
+        ha_device_service: HaDeviceService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     current_user = authorize.get_jwt_subject()
@@ -29,9 +29,9 @@ async def get_domain_devices(
 
 @device_router.get("/{entity_id}", response_model=DeviceStateAndSchedule)
 async def get_device_data(
-    entity_id: str,
-    ha_device_service: HaDeviceService = Depends(),
-    authorize: AuthJWT = Depends(),
+        entity_id: str,
+        ha_device_service: HaDeviceService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     current_username = authorize.get_jwt_subject()
@@ -45,10 +45,10 @@ async def get_device_data(
 
 @device_router.get("/history/{entity_id}", response_model=HaDeviceHistory)
 async def get_device_history(
-    entity_id: str,
-    time_limits=Depends(TimeLimits),
-    ha_device_service: HaDeviceService = Depends(),
-    authorize: AuthJWT = Depends(),
+        entity_id: str,
+        time_limits=Depends(TimeLimits),
+        ha_device_service: HaDeviceService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     device_history = ha_device_service.get_device_history_by_entity_id(
@@ -59,10 +59,10 @@ async def get_device_history(
 
 @device_router.patch("/command/{entity_id}", response_model=HaDeviceState)
 async def change_device_state(
-    entity_id: str,
-    device_command: HaDeviceCommand,
-    ha_device_service: HaDeviceService = Depends(),
-    authorize: AuthJWT = Depends(),
+        entity_id: str,
+        device_command: HaDeviceCommand,
+        ha_device_service: HaDeviceService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     current_username = authorize.get_jwt_subject()
@@ -78,10 +78,10 @@ async def change_device_state(
 
 @device_router.patch("/command/all/{domain}", response_model=list[HaDeviceState])
 async def change_domain_devices_state(
-    domain: Domain,
-    device_command: HaDeviceCommand,
-    ha_device_service: HaDeviceService = Depends(),
-    authorize: AuthJWT = Depends(),
+        domain: Domain,
+        device_command: HaDeviceCommand,
+        ha_device_service: HaDeviceService = Depends(),
+        authorize: AuthJWT = Depends(),
 ):
     authorize.jwt_required()
     current_username = authorize.get_jwt_subject()

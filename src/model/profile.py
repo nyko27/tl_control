@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String, LargeBinary
 from sqlalchemy.orm import relationship
-from src.security.password_hashing import get_password_hash_and_salt
+
 from src.db.setup import Base
+from src.security.password_hashing import get_password_hash_and_salt
 
 
 class Profile(Base):

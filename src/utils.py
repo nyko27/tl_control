@@ -1,13 +1,14 @@
-from datetime import datetime, timedelta
 import uuid
-import pytz
+from datetime import datetime, timedelta
 from enum import Enum
 from typing import Union
-from config import AppConfig
 
+import pytz
+
+from src.config import config
 
 UTC_TIMEZONE = pytz.timezone("UTC")
-LOCAL_TIMEZONE = pytz.timezone(AppConfig.LocalTimezone)
+LOCAL_TIMEZONE = pytz.timezone(config.LocalTimezone)
 
 
 class TimeMeasure(str, Enum):
@@ -18,11 +19,11 @@ class TimeMeasure(str, Enum):
 
 class TimeLimits:
     def __init__(
-        self,
-        start_time_measure: TimeMeasure = TimeMeasure.DAYS,
-        time_before_start: Union[int, None] = None,
-        end_time_measure: TimeMeasure = TimeMeasure.DAYS,
-        time_before_end: Union[int, None] = None,
+            self,
+            start_time_measure: TimeMeasure = TimeMeasure.DAYS,
+            time_before_start: Union[int, None] = None,
+            end_time_measure: TimeMeasure = TimeMeasure.DAYS,
+            time_before_end: Union[int, None] = None,
     ):
         self.start_time_measure = start_time_measure
         self.time_before_start = time_before_start

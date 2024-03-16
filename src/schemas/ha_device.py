@@ -1,6 +1,8 @@
 from datetime import time, datetime
 from typing import Union
+
 from pydantic import BaseModel, Field, confloat
+
 from src.utils import DeviceCommand
 
 

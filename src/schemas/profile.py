@@ -1,5 +1,5 @@
-from pydantic import BaseModel
 from fastapi import Form, UploadFile, File
+from pydantic import BaseModel
 
 
 class ProfileBase(BaseModel):

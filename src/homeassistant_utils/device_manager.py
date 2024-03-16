@@ -1,7 +1,9 @@
 from datetime import datetime
+
 from homeassistant_api import Client
-from src.utils import to_local_datetime, DeviceCommand, is_float, Domain, DeviceType
+
 from src.schemas.ha_device import HaDeviceHistory
+from src.utils import to_local_datetime, DeviceCommand, is_float, Domain, DeviceType
 
 
 class DeviceManager:
@@ -20,7 +22,9 @@ class DeviceManager:
         self, entity_id: str, temperature_value: float
     ):
         if temperature_value < 16 or temperature_value > 25:
-            raise ValueError("The temperature value should be a float between 16 and 25")
+            raise ValueError(
+                "The temperature value should be a float between 16 and 25"
+            )
 
         climate = self.ha_client.get_domain("climate")
         state = self.ha_client.get_state(entity_id=entity_id).state

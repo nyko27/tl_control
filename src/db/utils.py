@@ -1,5 +1,4 @@
 from src.db.setup import Base, engine
-from src.model import profile, ha_device, device_schedule
 
 
 def create_tables():

@@ -1,10 +1,12 @@
 from typing import Union
-from sqlalchemy.orm import Session
+
 from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
+
+from src.dependecies import get_db
 from src.model.ha_device import HaDevice
 from src.model.profile import Profile
 from src.security.password_hashing import check_password
-from src.dependecies import get_db
 from src.utils import is_int
 
 
@@ -32,16 +34,16 @@ class ProfileService:
         return profile
 
     def get_profile_by_username_or_id(self, username_or_id: Union[int, str]) -> Profile:
-        if is_int(username_or_id):
+        if profile := self.get_profile_by_username(username_or_id):
+            return profile
+        elif is_int(username_or_id):
             profile = self.get_profile_by_id(int(username_or_id))
+            return profile
         else:
-            profile = self.get_profile_by_username(username_or_id)
-        if not profile:
             raise HTTPException(
                 status_code=404,
                 detail="No profile with such nickname or email.",
             )
-        return profile
 
     def add_profile(
         self, username: str, password: str, ha_entities: list[str]

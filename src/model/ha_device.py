@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Time
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
+
 from src.db.setup import Base
 
 
@@ -18,4 +19,3 @@ class HaDevice(Base):
 
     def __repr__(self):
         return f"HaDevice [{self.id}]: entity_id={self.entity_id}, profile_id={self.profile_id}"
-
